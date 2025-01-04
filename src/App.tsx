@@ -22,6 +22,7 @@ function App() {
       />
       <Header />
       <StyledMain>
+        <OffsetHeaderSpace />
         <HomePage />
       </StyledMain>
     </ThemeProvider>
@@ -33,5 +34,9 @@ const StyledMain = styled('main')({
   flexDirection: 'column',
   minHeight: '100vh',
 });
+
+const OffsetHeaderSpace = styled('div')(({ theme }) => ({
+  padding: theme.spacing(4),
+}));
 
 export default App;

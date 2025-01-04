@@ -62,6 +62,10 @@ const CardContainer = styled('div')(({ theme }) => ({
   '& > .MuiCard-root': {
     width: '250px',
     height: '180px',
+
+    '&:hover': {
+      boxShadow: `2px 2px 12px ${theme.palette.grey[500]}`,
+    },
   },
 }));
 
