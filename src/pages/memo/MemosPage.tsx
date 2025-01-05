@@ -52,7 +52,7 @@ const MemosPage: FC = () => {
   ];
 
   return (
-    <>
+    <Box>
       <Box
         sx={(theme) => ({
           display: 'flex',
@@ -110,7 +110,7 @@ const MemosPage: FC = () => {
           ))}
         </CardContainer>
       </Stack>
-    </>
+    </Box>
   );
 };
 
