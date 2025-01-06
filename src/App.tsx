@@ -7,6 +7,8 @@ import {
 import HomePage from './pages/home/HomePage';
 import { theme } from './styles/theme';
 import { Header } from './shared/components/header/Header';
+import { RouterProvider } from '@tanstack/react-router';
+import { router } from './main';
 
 function App() {
   return (
@@ -20,6 +22,8 @@ function App() {
           },
         }}
       />
+      <RouterProvider router={router} />
+      {/* TODO: HomePageとMainPageにHeaderとMainをまとめる */}
       <Header />
       <StyledMain>
         <OffsetHeaderSpace />
