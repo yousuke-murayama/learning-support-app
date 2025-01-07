@@ -7,8 +7,16 @@ import {
 import HomePage from './pages/home/HomePage';
 import { theme } from './styles/theme';
 import { Header } from './shared/components/header/Header';
-import { RouterProvider } from '@tanstack/react-router';
-import { router } from './main';
+import { createRouter, RouterProvider } from '@tanstack/react-router';
+import { routeTree } from './routeTree.gen';
+
+const router = createRouter({ routeTree });
+
+declare module '@tanstack/react-router' {
+  interface Register {
+    router: typeof router;
+  }
+}
 
 function App() {
   return (
