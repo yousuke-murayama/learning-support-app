@@ -4,7 +4,6 @@ import {
   styled,
   ThemeProvider,
 } from '@mui/material';
-import HomePage from './pages/home/HomePage';
 import { theme } from './styles/theme';
 import { Header } from './shared/components/header/Header';
 import { createRouter, RouterProvider } from '@tanstack/react-router';
@@ -30,12 +29,10 @@ function App() {
           },
         }}
       />
-      <RouterProvider router={router} />
-      {/* TODO: HomePageとMainPageにHeaderとMainをまとめる */}
       <Header />
       <StyledMain>
         <OffsetHeaderSpace />
-        <HomePage />
+        <RouterProvider router={router} />
       </StyledMain>
     </ThemeProvider>
   );
