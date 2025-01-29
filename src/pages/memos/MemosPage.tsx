@@ -12,8 +12,8 @@ import {
 } from '@mui/material';
 import type { FC } from 'react';
 import SearchIcon from '@mui/icons-material/Search';
-import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
+import { Link } from '@tanstack/react-router';
 
 const MemosPage: FC = () => {
   const mockMemos: Array<{
@@ -80,9 +80,19 @@ const MemosPage: FC = () => {
           }}
         />
         <CardContainer>
-          {mockMemos.map(({ title, content, date }, index) => (
-            <Card key={index}>
-              <CardHeader title={title} />
+          {mockMemos.map(({ title, content, date, id }) => (
+            <Card key={id}>
+              <CardHeader
+                title={
+                  <Link
+                    from="/main/memos/"
+                    to="$memoId"
+                    params={{ memoId: id.toString() }}
+                  >
+                    {title}
+                  </Link>
+                }
+              />
               <CardContent>
                 <p>{date}</p>
                 {/* TODO: styled関数内で当てたい 2024/01/04 */}
@@ -97,10 +107,6 @@ const MemosPage: FC = () => {
                 </p>
               </CardContent>
               <CardActions>
-                <Button variant="contained" size="small">
-                  <EditIcon />
-                  編集
-                </Button>
                 <Button variant="contained" color="error" size="small">
                   <DeleteIcon />
                   削除

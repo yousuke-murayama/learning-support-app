@@ -17,6 +17,8 @@ import { Route as MainIndexImport } from './routes/main/index'
 import { Route as HomeIndexImport } from './routes/home/index'
 import { Route as MainMemosRouteImport } from './routes/main/memos/route'
 import { Route as MainMemosIndexImport } from './routes/main/memos/index'
+import { Route as MainMemosMemoIdRouteImport } from './routes/main/memos/$memoId/route'
+import { Route as MainMemosMemoIdIndexImport } from './routes/main/memos/$memoId/index'
 
 // Create/Update Routes
 
@@ -54,6 +56,18 @@ const MainMemosIndexRoute = MainMemosIndexImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => MainMemosRouteRoute,
+} as any)
+
+const MainMemosMemoIdRouteRoute = MainMemosMemoIdRouteImport.update({
+  id: '/$memoId',
+  path: '/$memoId',
+  getParentRoute: () => MainMemosRouteRoute,
+} as any)
+
+const MainMemosMemoIdIndexRoute = MainMemosMemoIdIndexImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => MainMemosMemoIdRouteRoute,
 } as any)
 
 // Populate the FileRoutesByPath interface
@@ -95,6 +109,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof MainIndexImport
       parentRoute: typeof MainRouteImport
     }
+    '/main/memos/$memoId': {
+      id: '/main/memos/$memoId'
+      path: '/$memoId'
+      fullPath: '/main/memos/$memoId'
+      preLoaderRoute: typeof MainMemosMemoIdRouteImport
+      parentRoute: typeof MainMemosRouteImport
+    }
     '/main/memos/': {
       id: '/main/memos/'
       path: '/'
@@ -102,16 +123,36 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof MainMemosIndexImport
       parentRoute: typeof MainMemosRouteImport
     }
+    '/main/memos/$memoId/': {
+      id: '/main/memos/$memoId/'
+      path: '/'
+      fullPath: '/main/memos/$memoId/'
+      preLoaderRoute: typeof MainMemosMemoIdIndexImport
+      parentRoute: typeof MainMemosMemoIdRouteImport
+    }
   }
 }
 
 // Create and export the route tree
 
+interface MainMemosMemoIdRouteRouteChildren {
+  MainMemosMemoIdIndexRoute: typeof MainMemosMemoIdIndexRoute
+}
+
+const MainMemosMemoIdRouteRouteChildren: MainMemosMemoIdRouteRouteChildren = {
+  MainMemosMemoIdIndexRoute: MainMemosMemoIdIndexRoute,
+}
+
+const MainMemosMemoIdRouteRouteWithChildren =
+  MainMemosMemoIdRouteRoute._addFileChildren(MainMemosMemoIdRouteRouteChildren)
+
 interface MainMemosRouteRouteChildren {
+  MainMemosMemoIdRouteRoute: typeof MainMemosMemoIdRouteRouteWithChildren
   MainMemosIndexRoute: typeof MainMemosIndexRoute
 }
 
 const MainMemosRouteRouteChildren: MainMemosRouteRouteChildren = {
+  MainMemosMemoIdRouteRoute: MainMemosMemoIdRouteRouteWithChildren,
   MainMemosIndexRoute: MainMemosIndexRoute,
 }
 
@@ -139,7 +180,9 @@ export interface FileRoutesByFullPath {
   '/main/memos': typeof MainMemosRouteRouteWithChildren
   '/home': typeof HomeIndexRoute
   '/main/': typeof MainIndexRoute
+  '/main/memos/$memoId': typeof MainMemosMemoIdRouteRouteWithChildren
   '/main/memos/': typeof MainMemosIndexRoute
+  '/main/memos/$memoId/': typeof MainMemosMemoIdIndexRoute
 }
 
 export interface FileRoutesByTo {
@@ -147,6 +190,7 @@ export interface FileRoutesByTo {
   '/home': typeof HomeIndexRoute
   '/main': typeof MainIndexRoute
   '/main/memos': typeof MainMemosIndexRoute
+  '/main/memos/$memoId': typeof MainMemosMemoIdIndexRoute
 }
 
 export interface FileRoutesById {
@@ -156,14 +200,24 @@ export interface FileRoutesById {
   '/main/memos': typeof MainMemosRouteRouteWithChildren
   '/home/': typeof HomeIndexRoute
   '/main/': typeof MainIndexRoute
+  '/main/memos/$memoId': typeof MainMemosMemoIdRouteRouteWithChildren
   '/main/memos/': typeof MainMemosIndexRoute
+  '/main/memos/$memoId/': typeof MainMemosMemoIdIndexRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/main' | '/main/memos' | '/home' | '/main/' | '/main/memos/'
+  fullPaths:
+    | '/'
+    | '/main'
+    | '/main/memos'
+    | '/home'
+    | '/main/'
+    | '/main/memos/$memoId'
+    | '/main/memos/'
+    | '/main/memos/$memoId/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/home' | '/main' | '/main/memos'
+  to: '/' | '/home' | '/main' | '/main/memos' | '/main/memos/$memoId'
   id:
     | '__root__'
     | '/'
@@ -171,7 +225,9 @@ export interface FileRouteTypes {
     | '/main/memos'
     | '/home/'
     | '/main/'
+    | '/main/memos/$memoId'
     | '/main/memos/'
+    | '/main/memos/$memoId/'
   fileRoutesById: FileRoutesById
 }
 
@@ -216,6 +272,7 @@ export const routeTree = rootRoute
       "filePath": "main/memos/route.tsx",
       "parent": "/main",
       "children": [
+        "/main/memos/$memoId",
         "/main/memos/"
       ]
     },
@@ -226,9 +283,20 @@ export const routeTree = rootRoute
       "filePath": "main/index.tsx",
       "parent": "/main"
     },
+    "/main/memos/$memoId": {
+      "filePath": "main/memos/$memoId/route.tsx",
+      "parent": "/main/memos",
+      "children": [
+        "/main/memos/$memoId/"
+      ]
+    },
     "/main/memos/": {
       "filePath": "main/memos/index.tsx",
       "parent": "/main/memos"
+    },
+    "/main/memos/$memoId/": {
+      "filePath": "main/memos/$memoId/index.tsx",
+      "parent": "/main/memos/$memoId"
     }
   }
 }
