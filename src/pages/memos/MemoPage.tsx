@@ -12,8 +12,10 @@ import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import AutoAwesomeIcon from '@mui/icons-material/AutoAwesome';
+import { useNavigate } from '@tanstack/react-router';
 
 const MemoPage: FC = () => {
+  const navigate = useNavigate();
   const mockMemo: { id: number; title: string; content: string; date: string } =
     {
       id: 1,
@@ -29,7 +31,11 @@ const MemoPage: FC = () => {
           padding: theme.spacing(2),
         })}
       >
-        <Button variant="text" startIcon={<ArrowBackIosIcon />}>
+        <Button
+          variant="text"
+          startIcon={<ArrowBackIosIcon />}
+          onClick={() => navigate({ to: '..' })}
+        >
           メモ一覧に戻る
         </Button>
       </Box>
